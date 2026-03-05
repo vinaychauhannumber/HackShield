@@ -251,11 +251,6 @@ This project is licensed under the MIT License.
 
 For issues and questions, please open an issue on the GitHub repository.
 
-## Authors
-
-- **Himanshu Khatri** - [GitHub](https://github.com/himanshukhatri192)
-
----
 
 **Note**: This is a security-focused application. Always use strong encryption keys and follow security best practices when handling sensitive data.
 # HackShield
