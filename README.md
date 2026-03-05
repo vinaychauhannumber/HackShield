@@ -258,3 +258,4 @@ For issues and questions, please open an issue on the GitHub repository.
 ---
 
 **Note**: This is a security-focused application. Always use strong encryption keys and follow security best practices when handling sensitive data.
+# HackShield
