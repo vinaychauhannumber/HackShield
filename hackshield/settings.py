@@ -18,10 +18,16 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-UPLOADS_DIR = os.path.join(BASE_DIR, 'uploads')
+if os.environ.get('VERCEL') == '1':
+    UPLOADS_DIR = '/tmp/uploads'
+else:
+    UPLOADS_DIR = os.path.join(BASE_DIR, 'uploads')
 
 # Ensure the directory exists
-os.makedirs(UPLOADS_DIR, exist_ok=True)
+try:
+    os.makedirs(UPLOADS_DIR, exist_ok=True)
+except OSError:
+    pass
 
 # Security settings for file uploads
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100MB
@@ -31,22 +37,32 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 
 
 # File storage settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-ENCRYPTED_DIR = os.path.join(BASE_DIR, 'media/encrypted')
-DECRYPTED_DIR = os.path.join(BASE_DIR, 'media/decrypted')
-KEYS_DIR = os.path.join(BASE_DIR, 'media/keys')
-UPLOADS_DIR = os.path.join(MEDIA_ROOT, 'uploads')
+if os.environ.get('VERCEL') == '1':
+    MEDIA_ROOT = '/tmp/media'
+    ENCRYPTED_DIR = '/tmp/media/encrypted'
+    DECRYPTED_DIR = '/tmp/media/decrypted'
+    KEYS_DIR = '/tmp/media/keys'
+    UPLOADS_DIR = '/tmp/media/uploads'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    ENCRYPTED_DIR = os.path.join(BASE_DIR, 'media/encrypted')
+    DECRYPTED_DIR = os.path.join(BASE_DIR, 'media/decrypted')
+    KEYS_DIR = os.path.join(BASE_DIR, 'media/keys')
+    UPLOADS_DIR = os.path.join(MEDIA_ROOT, 'uploads')
 
 # Encryption settings
 ENCRYPT_CHUNK_SIZE = 8192
 STREAM_HEADER_SIZE = 4  # bytes for length prefix
 
 # Ensure directories exist
-os.makedirs(MEDIA_ROOT, exist_ok=True)
-os.makedirs(ENCRYPTED_DIR, exist_ok=True)
-os.makedirs(DECRYPTED_DIR, exist_ok=True)
-os.makedirs(KEYS_DIR, exist_ok=True)
-os.makedirs(UPLOADS_DIR, exist_ok=True)
+try:
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+    os.makedirs(ENCRYPTED_DIR, exist_ok=True)
+    os.makedirs(DECRYPTED_DIR, exist_ok=True)
+    os.makedirs(KEYS_DIR, exist_ok=True)
+    os.makedirs(UPLOADS_DIR, exist_ok=True)
+except OSError:
+    pass
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
